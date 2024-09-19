@@ -1,5 +1,5 @@
 
-class Subject {
+export class Subject {
 
     private id: number;
     private name: string;

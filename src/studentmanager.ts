@@ -1,5 +1,7 @@
+import { Student } from "./student";
+import { Subject } from "./subject";
 
-class StudentManager {
+export class StudentManager {
 
     private students: Student[];
 
@@ -16,13 +18,26 @@ class StudentManager {
         this.students.push(newStudent);
     }
 
-    public addSubjectToStudent(subject: Subject, studentId: number) {
+    public addSubjectToStudent(subject: Subject | null, studentId: number) {
+        if (subject != null)
+            this.students.forEach(student => {
+                if (student.getId() == studentId) {
+                    let studentSubjects = student.getSubjects();
+                    studentSubjects.push(subject);
+                    student.setSubjects(studentSubjects);
+                }
+            })
+    }
+
+    public studentExists(studentId: number) {
+        for (let student of this.students) 
+            if (student.getId() == studentId) return true;
+        return false;
+    }
+
+    public printStudentSubjects(studentId: number) {
         this.students.forEach(student => {
-            if (student.getId() == studentId) {
-                let studentSubjects = student.getSubjects();
-                studentSubjects.push(subject);
-                student.setSubjects(studentSubjects)
-            }
+            if (student.getId() == studentId) console.log(student.getSubjects());
         })
     }
 

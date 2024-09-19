@@ -1,15 +1,17 @@
-class Student {
+import { Subject } from "./subject";
+
+export class Student {
 
     private id: number;
     private name: string;
     private surnames: string;
     private subjects: Subject[];
     
-    constructor(id: number, name: string, surnames: string, subjects: Subject[] = []) {
+    constructor(id: number, name: string, surnames: string) {
         this.id = id;
         this.name = name;
         this.surnames = surnames;
-        this.subjects = subjects;
+        this.subjects = [];
     }
 
     public getId(): number {

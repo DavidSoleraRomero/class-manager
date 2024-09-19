@@ -1,5 +1,6 @@
+import { Subject } from "./subject";
 
-class SubjectManager {
+export class SubjectManager {
 
     private subjects: Subject[];
 
@@ -7,12 +8,20 @@ class SubjectManager {
         this.subjects = [];
     }
 
-    public getSubjects() {
+    public getAllSubjects() {
         return this.subjects;
     }
 
-    public setSubjects(subjects: Subject[]) {
+    public setAllSubjects(subjects: Subject[]) {
         this.subjects = subjects;
+    }
+
+    public getSubject(subjectId: number): Subject | null {
+        for (let subject of this.subjects) {
+            if (subject.getId() === subjectId)
+                return subject;
+        }
+        return null;
     }
 
     public removeSubject(subjectId: number) {
@@ -22,6 +31,19 @@ class SubjectManager {
 
     public addSubject(newSubject: Subject) {
         this.subjects.push(newSubject);
+    }
+
+    public listSubjects() {
+        console.log("Listado de asignaturas:");
+        this.subjects.forEach(subject => {
+            console.log(`${subject.getId()} - ${subject.getName()}`);
+        });
+    }
+
+    public subjectExists(subjectId: number) {
+        for (let subject of this.subjects) 
+            if (subject.getId() == subjectId) return true; 
+        return false;
     }
 
 }
