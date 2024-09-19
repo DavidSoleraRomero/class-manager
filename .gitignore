@@ -1,0 +1,6 @@
+# Ignorar node_modules y dist
+node_modules/
+dist/
+
+# Ignorar archivos específicos de configuración o compilación
+.vscode/
