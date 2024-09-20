@@ -23,7 +23,7 @@ export class StudentManager {
             this.students.forEach(student => {
                 if (student.getId() == studentId) {
                     let studentSubjects = student.getSubjects();
-                    studentSubjects.push(subject);
+                    studentSubjects.set(subject, null);
                     student.setSubjects(studentSubjects);
                 }
             })
@@ -39,6 +39,44 @@ export class StudentManager {
         this.students.forEach(student => {
             if (student.getId() == studentId) console.log(student.getSubjects());
         })
+    }
+
+    public assignNoteToStudent(subject: Subject, studentId: number, note: number) {
+        for (let student of this.students) {
+            if (student.getId() == studentId) {
+                let studentSubjects = student.getSubjects();
+                studentSubjects.set(subject, note);
+            }
+        }
+    }
+
+    public listStudentNotes(studentId: number) {
+        for (let student of this.students) {
+            if (student.getId() == studentId) {
+                if (student.getSubjects().size != 0)  {
+                    student.getSubjects().forEach((note, subject) => {
+                        console.log(`Asignatura -> ${subject.getName()} - ${(note == null) ? "Sin nota" : note}`);
+                    });
+                } else console.log("Actualmente ese estudiante no dispone de asignaturas / notas.")
+            } 
+        }
+    }
+
+    public listStudentsNotes() {
+        for (let student of this.students) {
+            console.log(`Alumno: ${student.getName()} ${student.getSurnames()}`);
+            if (student.getSubjects().size != 0)  {
+                student.getSubjects().forEach((note, subject) => {
+                    console.log(`Asignatura -> ${subject.getName()} - ${(note == null) ? "Sin nota" : note}`);
+                });
+            } else console.log("Actualmente ese estudiante no dispone de asignaturas / notas.")
+        }
+    }
+
+    public listStudents() {
+        this.students.forEach(student => {
+            console.log(`${student.getId()} - ${student.getName()} ${student.getSurnames()}`);
+        });
     }
 
 }

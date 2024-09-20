@@ -23,7 +23,7 @@ export class InstitutionManager {
         this.subjectManager.listSubjects();
         let subjectId = readline.questionInt("Introduce el ID de la asignatura: ");
         let subject = this.subjectManager.getSubject(subjectId);
-        if (typeof subject === "object") {
+        if (subject != null) {
             let studentId = readline.questionInt("Introduce el ID del alumno: ");
             if (this.studentManager.studentExists(studentId)) {
                 this.studentManager.addSubjectToStudent(subject, studentId);
@@ -46,6 +46,46 @@ export class InstitutionManager {
         if (this.studentManager.studentExists(studentId)) {
             this.studentManager.printStudentSubjects(studentId);
         } else console.log("Lo sentimos; ese alumno no existe");
+    }
+
+    public createSubject() {
+        let subjectId = readline.questionInt("Introduce el ID de la materia: ");
+        let subjectName = readline.question("Introduce el nombre de la materia: ");
+        this.subjectManager.addSubject(new Subject(subjectId, subjectName));
+        console.log(`La asignatura ${subjectName} ha sido creada satisfactoriamente`);
+    }
+
+    public listSubjects() {
+        this.subjectManager.listSubjects();
+    }
+
+    public assignNoteToStudent() {
+        let subjectId = readline.questionInt("Introduce el ID de la materia: ");
+        let subject = this.subjectManager.getSubject(subjectId);
+        if (subject != null) { 
+            this.studentManager.listStudents();
+            let studentId = readline.questionInt("Introduce el ID del alumno: ");
+            if (this.studentManager.studentExists(studentId)) {
+                let note = readline.questionInt("Introduce la nota del alumno: ");
+                this.studentManager.assignNoteToStudent(subject, studentId, note);
+                console.log("Nota asignada al alumno de forma satisfactoria.")
+            } else console.log("Lo sentimos; ese alumno no existe");
+        } else console.log("Lo sentimos; esa asignatura no existe");
+    }
+
+    public listStudentNotes() {
+        let studentId = readline.questionInt("Introduce el ID del alumno: ");
+        if (this.studentManager.studentExists(studentId)) 
+            this.studentManager.listStudentNotes(studentId);
+        else console.log("Lo sentimos; ese alumno no existe");
+    }
+
+    public listStudentsNotes() {
+        this.studentManager.listStudentsNotes();
+    }
+
+    public listStudents() {
+        this.studentManager.listStudents();
     }
     
 }

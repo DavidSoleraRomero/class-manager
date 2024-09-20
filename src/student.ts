@@ -5,13 +5,13 @@ export class Student {
     private id: number;
     private name: string;
     private surnames: string;
-    private subjects: Subject[];
+    private subjects: Map<Subject, number | null>;
     
     constructor(id: number, name: string, surnames: string) {
         this.id = id;
         this.name = name;
         this.surnames = surnames;
-        this.subjects = [];
+        this.subjects = new Map<Subject, number | null>;
     }
 
     public getId(): number {
@@ -38,15 +38,15 @@ export class Student {
         this.surnames = surnames;
     }
 
-    public getSubjects(): Subject[] {
+    public getSubjects(): Map<Subject, number | null> {
         return this.subjects;
     }
 
-    public setSubjects(subjects: Subject[]): void {
+    public setSubjects(subjects: Map<Subject, number | null>): void {
         this.subjects = subjects;
     }
 
-    public getNotes(): Subject[] {
+    public getNotes(): Map<Subject, number | null> {
         return this.subjects;
     }
 
