@@ -81,6 +81,14 @@ export class StudentManager {
         }
     }
 
+    public getStudent(studentId: number): Student | null {
+        for (let student of this.students) {
+            if (student.getId() == studentId)
+                return student;
+        }
+        return null;
+    }
+
     public listStudents() {
         console.log("Listado de estudiantes: ");
         this.students.forEach(student => {

@@ -44,8 +44,11 @@ export class InstitutionManager {
     }
 
     public listStudentSubjects() {
+        this.studentManager.listStudents();
         let studentId = readline.questionInt("Introduce el ID del alumno: ");
         if (this.studentManager.studentExists(studentId)) {
+            let student = this.studentManager.getStudent(studentId);
+            console.log(`Alumno: ${student?.getName()} ${student?.getSurnames()}`);
             this.studentManager.printStudentSubjects(studentId);
         } else console.log("Lo sentimos; ese alumno no existe");
     }
