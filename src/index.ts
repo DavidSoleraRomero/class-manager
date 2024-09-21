@@ -22,24 +22,25 @@ function main() {
   let option: number = 0;
   do {
     option = GeneralMenu.menu();
+    console.log()
     switch(option) {
       case 1: 
         institutionManager.createStudent();
         break;
       case 2: 
-        institutionManager.assignSubjectToStudent();
-        break;
-      case 3:
-        institutionManager.listStudentSubjects();
-        break;
-      case 4:
         institutionManager.createSubject();
         break;
-      case 5:
+        case 3:
+        institutionManager.assignSubjectToStudent();
+        break;
+      case 4:
         institutionManager.listSubjects();
         break;
+      case 5:
+        institutionManager.listStudentSubjects();
+        break;
       case 6:
-        institutionManager.assignNoteToStudent();
+        institutionManager.listStudents();
         break;
       case 7:
         institutionManager.listStudentNotes();
@@ -48,16 +49,16 @@ function main() {
         institutionManager.listStudentsNotes();
         break;
       case 9:
-        institutionManager.listStudents();
+        institutionManager.assignNoteToStudent();
         break;
       case 10:
         console.log("Gracias por hacer uso de nuestros sistemas gestores");
         break;
       default:
         console.log("Opción inválida introducida");
-    } 
+    }
+    console.log();
   } while(option != 10);
 
 }
-
 main();

@@ -24,6 +24,7 @@ export class InstitutionManager {
         let subjectId = readline.questionInt("Introduce el ID de la asignatura: ");
         let subject = this.subjectManager.getSubject(subjectId);
         if (subject != null) {
+            this.studentManager.listStudents();
             let studentId = readline.questionInt("Introduce el ID del alumno: ");
             if (this.studentManager.studentExists(studentId)) {
                 this.studentManager.addSubjectToStudent(subject, studentId);
@@ -33,6 +34,7 @@ export class InstitutionManager {
     }
 
     public createStudent() {
+        this.studentManager.listStudents();
         let studentId = readline.questionInt("Introduce el ID del alumno: ");
         let studentName = readline.question("Introduce el nombre del alumno: ");
         let studentSurnames = readline.question("Introduce los apellidos del alumno: ");
@@ -49,10 +51,10 @@ export class InstitutionManager {
     }
 
     public createSubject() {
+        this.subjectManager.listSubjects();
         let subjectId = readline.questionInt("Introduce el ID de la materia: ");
         let subjectName = readline.question("Introduce el nombre de la materia: ");
         this.subjectManager.addSubject(new Subject(subjectId, subjectName));
-        console.log(`La asignatura ${subjectName} ha sido creada satisfactoriamente`);
     }
 
     public listSubjects() {
@@ -60,20 +62,31 @@ export class InstitutionManager {
     }
 
     public assignNoteToStudent() {
-        let subjectId = readline.questionInt("Introduce el ID de la materia: ");
-        let subject = this.subjectManager.getSubject(subjectId);
-        if (subject != null) { 
-            this.studentManager.listStudents();
+        this.studentManager.listStudents();
             let studentId = readline.questionInt("Introduce el ID del alumno: ");
             if (this.studentManager.studentExists(studentId)) {
-                let note = readline.questionInt("Introduce la nota del alumno: ");
-                this.studentManager.assignNoteToStudent(subject, studentId, note);
-                console.log("Nota asignada al alumno de forma satisfactoria.")
+                let studentSubjects = this.studentManager.getStudentSubjects(studentId);
+                if (studentSubjects?.size != 0) {
+                    studentSubjects?.forEach((note, subject) => { 
+                        console.log(`${subject.getId()} - ${subject.getName()} - Nota: ${(note == null) ? "Sin nota" : note}`);
+                    });
+                    let subjectId = readline.questionInt("Introduce el ID de la materia: ");
+                    let subject = this.subjectManager.getSubject(subjectId);
+                    if (subject == null) console.log("Lo sentimos; esa asignatura no existe");
+                    else {
+                        if (studentSubjects?.has(subject)) { 
+                            let note = readline.questionInt("Introduce la nota del alumno: ");
+                            this.studentManager.assignNoteToStudent(subject, studentId, note);
+                            console.log("Nota asignada al alumno de forma satisfactoria.")
+                        } else console.log("Lo sentimos; el alumno no dispone de esa asignatura"); 
+                    }
+                } else console.log("Lo sentimos; el alumno no dispone de asignaturas actualmente");
+                
             } else console.log("Lo sentimos; ese alumno no existe");
-        } else console.log("Lo sentimos; esa asignatura no existe");
     }
 
     public listStudentNotes() {
+        this.studentManager.listStudents();
         let studentId = readline.questionInt("Introduce el ID del alumno: ");
         if (this.studentManager.studentExists(studentId)) 
             this.studentManager.listStudentNotes(studentId);

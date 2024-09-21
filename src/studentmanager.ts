@@ -15,7 +15,10 @@ export class StudentManager {
     }
 
     public addStudent(newStudent: Student) {
-        this.students.push(newStudent);
+        if (!this.studentExists(newStudent.getId())) {
+            this.students.push(newStudent);
+        } else console.log("Lo sentimos; el ID del alumno introducido ya existe");
+        
     }
 
     public addSubjectToStudent(subject: Subject | null, studentId: number) {
@@ -37,7 +40,12 @@ export class StudentManager {
 
     public printStudentSubjects(studentId: number) {
         this.students.forEach(student => {
-            if (student.getId() == studentId) console.log(student.getSubjects());
+            if (student.getId() == studentId)
+                if (student.getSubjects().size != 0)
+                    student.getSubjects().forEach((note, subject) => {
+                        console.log(`${subject.getName()} - ID -> ${subject.getId()}`);
+                    });
+                else console.log("Ese alumno no dispone de asignaturas actualmente");
         })
     }
 
@@ -55,7 +63,7 @@ export class StudentManager {
             if (student.getId() == studentId) {
                 if (student.getSubjects().size != 0)  {
                     student.getSubjects().forEach((note, subject) => {
-                        console.log(`Asignatura -> ${subject.getName()} - ${(note == null) ? "Sin nota" : note}`);
+                        console.log(`${subject.getName()} - Nota: ${(note == null) ? "Sin nota" : note}`);
                     });
                 } else console.log("Actualmente ese estudiante no dispone de asignaturas / notas.")
             } 
@@ -67,16 +75,26 @@ export class StudentManager {
             console.log(`Alumno: ${student.getName()} ${student.getSurnames()}`);
             if (student.getSubjects().size != 0)  {
                 student.getSubjects().forEach((note, subject) => {
-                    console.log(`Asignatura -> ${subject.getName()} - ${(note == null) ? "Sin nota" : note}`);
+                    console.log(`${subject.getName()} - Nota: ${(note == null) ? "Sin nota" : note}`);
                 });
             } else console.log("Actualmente ese estudiante no dispone de asignaturas / notas.")
         }
     }
 
     public listStudents() {
+        console.log("Listado de estudiantes: ");
         this.students.forEach(student => {
             console.log(`${student.getId()} - ${student.getName()} ${student.getSurnames()}`);
         });
+    }
+
+    public getStudentSubjects(studentId: number) {
+        if (this.studentExists(studentId)) {
+            for (let student of this.students) {
+                if (student.getId() == studentId)
+                    return student.getSubjects();
+            }
+        } else console.log("Lo sentimos; el ID del alumno introducido no existe");
     }
 
 }

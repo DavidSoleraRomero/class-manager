@@ -30,14 +30,19 @@ export class SubjectManager {
     }
 
     public addSubject(newSubject: Subject) {
-        this.subjects.push(newSubject);
+        if (!this.subjectExists(newSubject.getId())) {
+            this.subjects.push(newSubject);
+            console.log("Asignatura creada con éxito");
+        } else console.log("Lo sentimos; el ID de la asignatura introducida ya existe");
     }
 
     public listSubjects() {
-        console.log("Listado de asignaturas:");
-        this.subjects.forEach(subject => {
-            console.log(`${subject.getId()} - ${subject.getName()}`);
-        });
+        if (this.subjects.length != 0) {
+            console.log("Listado de asignaturas:");
+            this.subjects.forEach(subject => {
+                console.log(`${subject.getId()} - ${subject.getName()}`);
+            });
+        } else console.log("El sistema carece de asignaturas actualmente");
     }
 
     public subjectExists(subjectId: number) {
