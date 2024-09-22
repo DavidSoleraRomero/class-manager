@@ -2,6 +2,7 @@ import { Student } from './student';
 import { Subject } from './subject';
 import { InstitutionManager } from './institutionmanager';
 import { GeneralMenu } from './generalmenu';
+import * as readline from 'readline-sync';
 
 let institutionManager = new InstitutionManager();
 institutionManager.addStudents([
@@ -20,6 +21,9 @@ institutionManager.addSubjects([
 function main() {
 
   let option: number = 0;
+  console.log(GeneralMenu.welcomeMessage());
+  readline.keyInPause("Presione cualquier letra para continuar");
+  console.log();
   do {
     option = GeneralMenu.menu();
     console.log()
@@ -53,6 +57,7 @@ function main() {
         break;
       case 10:
         console.log("Gracias por hacer uso de nuestros sistemas gestores");
+        console.log(GeneralMenu.welcomeMessage());
         break;
       default:
         console.log("Opción inválida introducida");
