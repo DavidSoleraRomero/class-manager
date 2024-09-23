@@ -56,8 +56,9 @@ function main() {
         institutionManager.assignNoteToStudent();
         break;
       case 10:
-        console.log("Gracias por hacer uso de nuestros sistemas gestores");
+        console.log("Gracias por hacer uso de nuestros sistemas gestores.");
         console.log(GeneralMenu.welcomeMessage());
+        console.log("El programa Class Manager finalizó correctamente.");
         break;
       default:
         console.log("Opción inválida introducida");
